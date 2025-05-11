@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Compteur Mignon</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #ffeef8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #ff66a3;
+    }
+    .names {
+      margin-bottom: 10px;
+    }
+    input {
+      border: none;
+      padding: 8px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 16px;
+      background-color: #fff0f5;
+      margin: 0 5px;
+    }
+    .container {
+      display: flex;
+      gap: 30px;
+    }
+    .player {
+      background-color: #ffd1dc;
+      border-radius: 20px;
+      padding: 30px;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px #ffb6c1;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .player:hover {
+      transform: scale(1.05);
+    }
+    .score {
+      font-size: 48px;
+      color: #ff1493;
+    }
+    .reset {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #ffb6c1;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+    }
+    .reset:hover {
+      background: #ff69b4;
+    }
+  </style>
+</head>
+<body>
+  <h1>Qui gagne le plus de points ?</h1>
+  <div class="names">
+    <input id="name1" type="text" placeholder="Nom 1" value="Personne 1">
+    <input id="name2" type="text" placeholder="Nom 2" value="Personne 2">
+  </div>
+  <div class="container">
+    <div class="player" onclick="addPoint(0)">
+      <div id="displayName1">Personne 1</div>
+      <div class="score" id="score1">0</div>
+    </div>
+    <div class="player" onclick="addPoint(1)">
+      <div id="displayName2">Personne 2</div>
+      <div class="score" id="score2">0</div>
+    </div>
+  </div>
+  <button class="reset" onclick="resetPoints()">Réinitialiser</button>
+
+  <script>
+    let scores = [0, 0];
+
+    function addPoint(index) {
+      scores[index]++;
+      document.getElementById('score' + (index + 1)).textContent = scores[index];
+    }
+
+    function resetPoints() {
+      scores = [0, 0];
+      document.getElementById('score1').textContent = 0;
+      document.getElementById('score2').textContent = 0;
+    }
+
+    document.getElementById('name1').addEventListener('input', function () {
+      document.getElementById('displayName1').textContent = this.value;
+    });
+    document.getElementById('name2').addEventListener('input', function () {
+      document.getElementById('displayName2').textContent = this.value;
+    });
+  </script>
+</body>
+</html>
