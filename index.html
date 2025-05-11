@@ -87,6 +87,34 @@
     display: none !important;
   }
 }
+    .dust {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  background: radial-gradient(circle, #fff0, #ffb6c1 40%, transparent 70%);
+  animation: explode 0.6s ease-out forwards;
+  opacity: 0.8;
+  border-radius: 50%;
+  z-index: 9999;
+  mix-blend-mode: lighten;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -96,11 +124,11 @@
     <input id="name2" type="text" placeholder="Nom 2" value="Personne 2">
   </div>
   <div class="container">
-    <div class="player" onclick="addPoint(0)">
+    <div class="player" onclick="addPoint(0, event)">
       <div id="displayName1">Personne 1</div>
       <div class="score" id="score1">0</div>
     </div>
-    <div class="player" onclick="addPoint(1)">
+    <div class="player" onclick="addPoint(1, event)">
       <div id="displayName2">Personne 2</div>
       <div class="score" id="score2">0</div>
     </div>
@@ -110,10 +138,16 @@
   <script>
     let scores = [0, 0];
 
-    function addPoint(index) {
-      scores[index]++;
-      document.getElementById('score' + (index + 1)).textContent = scores[index];
-    }
+    function addPoint(index, event) {
+  scores[index]++;
+  document.getElementById('score' + (index + 1)).textContent = scores[index];
+
+  if (event) {
+    const x = event.clientX;
+    const y = event.clientY;
+    showDust(x, y);
+  }
+}
 
     function resetPoints() {
       scores = [0, 0];
@@ -127,6 +161,15 @@
     document.getElementById('name2').addEventListener('input', function () {
       document.getElementById('displayName2').textContent = this.value;
     });
+    function showDust(x, y) {
+  const dust = document.createElement("div");
+  dust.className = "dust";
+  dust.style.left = `${x - 40}px`;
+  dust.style.top = `${y - 40}px`;
+  document.body.appendChild(dust);
+  setTimeout(() => dust.remove(), 700); // auto delete
+}
+
   </script>
 </body>
 </html>
